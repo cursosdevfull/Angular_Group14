@@ -1,0 +1,11 @@
+<ul>
+  <li *ngFor="let task of tasks">
+    {{ task.title }}<br />
+    <amb-responsable
+      responsableName="{{ task.responsableName }}"
+      [points]="task.points"
+    ></amb-responsable
+    ><br />
+    <amb-show-time></amb-show-time>
+  </li>
+</ul>
