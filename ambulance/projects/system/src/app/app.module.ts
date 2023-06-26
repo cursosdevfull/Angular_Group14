@@ -2,14 +2,21 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
+import { FormTaskComponent } from './form-task/form-task.component';
 import { ListTaskComponent } from './misComponentes/list-task.component';
 import { ShowTime } from './misComponentes/show-time.component';
 import { ResponsableComponent } from './responsable/responsable.component';
 
 @NgModule({
-  declarations: [AppComponent, ShowTime, ListTaskComponent, ResponsableComponent],
+  declarations: [
+    AppComponent,
+    ShowTime,
+    ListTaskComponent,
+    ResponsableComponent,
+    FormTaskComponent,
+  ],
   imports: [BrowserModule],
   providers: [],
-  bootstrap: [ListTaskComponent],
+  bootstrap: [ListTaskComponent, FormTaskComponent],
 })
 export class AppModule {}

@@ -2,3 +2,15 @@
 h1 {
   font-style: italic;
 }
+
+.container {
+  display: flex;
+}
+
+.list-task {
+  flex: 1 1 70%;
+}
+
+.form-task {
+  flex: 1 1 30%;
+}

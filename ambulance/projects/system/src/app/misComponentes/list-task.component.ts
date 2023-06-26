@@ -11,6 +11,7 @@ export class ListTaskComponent {
       title: 'Modificar el componente login para que soporte un re-captcha',
       responsableName: 'Jhonatan',
       points: 3,
+      startDate: new Date(2023, 6, 28),
     },
     {
       title:

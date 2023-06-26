@@ -1,0 +1,21 @@
+<form>
+  <div>
+    <h5>Descripción de la tarea</h5>
+    <textarea (input)="captureDescription($event)"></textarea>
+  </div>
+  <div>
+    <h5>Responsable</h5>
+    <input type="text" />
+  </div>
+  <div>
+    <h5>Duración (días)</h5>
+    <input type="number" />
+  </div>
+  <div>
+    <h5>Fecha de inicio</h5>
+    <input type="date" />
+  </div>
+  <div>
+    <button type="button" (click)="save()">Guardar</button>
+  </div>
+</form>
