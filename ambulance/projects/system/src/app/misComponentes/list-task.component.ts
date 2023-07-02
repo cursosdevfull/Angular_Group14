@@ -1,42 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+
+import { ITask } from '../interfaces/task.interface';
 
 @Component({
   selector: 'amb-list-task',
   templateUrl: './list-task.component.html',
   styleUrls: ['./list-task.component.css'],
 })
-export class ListTaskComponent {
-  tasks = [
-    {
-      title: 'Modificar el componente login para que soporte un re-captcha',
-      responsableName: 'Jhonatan',
-      points: 3,
-      startDate: new Date(2023, 6, 28),
-    },
-    {
-      title:
-        'Conectar el gráfico de valores con el API Rest de la bolsa de valores',
-      responsableName: 'Pierina',
-      points: 5,
-      startDate: new Date(2023, 6, 27),
-    },
-    {
-      title: 'Generar el código QR para futuras compras',
-      responsableName: 'Juan Carlos',
-      points: 2,
-      startDate: new Date(2023, 7, 3),
-    },
-    {
-      title: 'Implementar el formulario de pago de la pasarela',
-      responsableName: 'Alejandra',
-      points: 1,
-      startDate: new Date(2023, 7, 21),
-    },
-    {
-      title: 'Implementar el cambio de calendario cuando se agenda una cita',
-      responsableName: 'Carmela',
-      points: 2,
-      startDate: new Date(2023, 7, 31),
-    },
-  ];
+export class ListTaskComponent implements OnInit {
+  @Input() tasks: ITask[] = [];
+
+  constructor() {
+    console.log('constructor of ListTask executed');
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['newTask']?.currentValue) {
+      //this.tasks.push(changes['newTask'].currentValue);
+    }
+
+    console.log('changes', changes);
+    console.log('ngOnChanges executed');
+  }
+  ngOnInit(): void {
+    console.log('ngOnInit executed');
+  }
 }

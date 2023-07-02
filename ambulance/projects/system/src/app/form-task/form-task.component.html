@@ -5,15 +5,15 @@
   </div>
   <div>
     <h5>Responsable</h5>
-    <input type="text" />
+    <input type="text" (input)="captureResponsable($event)" />
   </div>
   <div>
     <h5>Duración (días)</h5>
-    <input type="number" />
+    <input type="number" (input)="captureDuration($event)" />
   </div>
   <div>
     <h5>Fecha de inicio</h5>
-    <input type="date" />
+    <input type="date" (input)="captureStartDate($event)" />
   </div>
   <div>
     <button type="button" (click)="save()">Guardar</button>

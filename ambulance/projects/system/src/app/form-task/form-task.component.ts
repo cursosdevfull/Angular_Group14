@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+
+import { ITask } from '../interfaces/task.interface';
 
 @Component({
   selector: 'amb-form-task',
@@ -6,9 +8,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./form-task.component.css'],
 })
 export class FormTaskComponent {
-  descriptionTask = '';
+  @Output() onAddTask: EventEmitter<ITask> = new EventEmitter<ITask>();
 
-  constructor() {}
+  descriptionTask = '';
+  responsableTask = '';
+  durationTask = 0;
+  startDateTask;
+
+  constructor() {
+    this.startDateTask = new Date();
+  }
 
   /*ngAfterViewInit() {
     const btn = document.getElementById('btnSave') as HTMLButtonElement;
@@ -18,10 +27,33 @@ export class FormTaskComponent {
   }*/
 
   save() {
-    console.log('button clicked');
+    const task: ITask = {
+      title: this.descriptionTask,
+      responsableName: this.responsableTask,
+      points: this.durationTask,
+      startDate: this.startDateTask,
+    };
+
+    this.onAddTask.emit(task);
+    console.log(this.descriptionTask);
+    console.log(this.responsableTask);
+    console.log(this.durationTask);
+    console.log(this.startDateTask);
   }
 
   captureDescription(evt: any) {
     this.descriptionTask = evt.target.value;
+  }
+
+  captureResponsable(evt: any) {
+    this.responsableTask = evt.target.value;
+  }
+
+  captureDuration(evt: any) {
+    this.durationTask = evt.target.value;
+  }
+
+  captureStartDate(evt: any) {
+    this.startDateTask = evt.target.value;
   }
 }
