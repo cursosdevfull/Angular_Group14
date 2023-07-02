@@ -1,5 +1,9 @@
-import { ITask } from '../interfaces/task.interface';
+import { Injectable } from '@angular/core';
 
+import { ITask } from '../interfaces/task.interface';
+import { LogService } from './log.service';
+
+@Injectable()
 export class TaskService {
   tasks: ITask[] = [
     {
@@ -35,7 +39,8 @@ export class TaskService {
     },
   ];
 
-  constructor() {
+  constructor(log: LogService) {
+    log.info('mensaje de prueba');
     console.log('constructor of TaskService executed');
   }
 }

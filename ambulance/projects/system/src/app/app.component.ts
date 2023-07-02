@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 
+import { LIST_TASKS } from './app.module';
 import { ITask } from './interfaces/task.interface';
+import { LayoutService } from './services/layout.service';
 import { TaskService } from './services/task.service';
 
 @Component({
@@ -14,8 +16,15 @@ export class AppComponent {
   constructor(
     /*@Inject('LIST_TASKS')*/ /*@Inject(MyTokenTaskService)*/
     //@Inject(TaskService) obj: TaskService
-    obj: TaskService
+    obj: TaskService,
+    //@Inject('DATA_MODAL') data: string
+    @Inject(LIST_TASKS) data: [],
+    @Inject('API_URL') apiUrl: string,
+    layout: LayoutService
   ) {
+    console.log('layout options', layout.options);
+    console.log('apiUrl', apiUrl);
+    console.log('data', data);
     console.log(obj);
     this.tasks = obj.tasks;
   }
