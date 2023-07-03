@@ -3,6 +3,7 @@ import { Component, Inject } from '@angular/core';
 import { LIST_TASKS } from './app.module';
 import { ITask } from './interfaces/task.interface';
 import { LayoutService } from './services/layout.service';
+import { IPhoto, PhotoService } from './services/photo.service';
 import { TaskService } from './services/task.service';
 
 @Component({
@@ -12,6 +13,7 @@ import { TaskService } from './services/task.service';
 })
 export class AppComponent {
   tasks: ITask[] = [];
+  photos: IPhoto[] = [];
 
   constructor(
     /*@Inject('LIST_TASKS')*/ /*@Inject(MyTokenTaskService)*/
@@ -20,13 +22,18 @@ export class AppComponent {
     //@Inject('DATA_MODAL') data: string
     @Inject(LIST_TASKS) data: [],
     @Inject('API_URL') apiUrl: string,
-    layout: LayoutService
+    layout: LayoutService,
+    photo: PhotoService
   ) {
     console.log('layout options', layout.options);
     console.log('apiUrl', apiUrl);
     console.log('data', data);
     console.log(obj);
     this.tasks = obj.tasks;
+
+    photo.getPhotos().subscribe({
+      next: (data: IPhoto[]) => (this.photos = data),
+    });
   }
 
   addTask(task: ITask) {

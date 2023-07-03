@@ -4,7 +4,13 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'recortar',
 })
 export class RecortarPipe implements PipeTransform {
-  transform(value: any, quantity: number, text: string) {
-    return value.substring(0, quantity) + text;
+  transform(value: string, quantity: number, text: string) {
+    const words = value.split(' ');
+    if (words.length > quantity) {
+      return words.slice(0, quantity).join(' ') + text;
+    }
+
+    return value;
+    //return value.substring(0, quantity) + text;
   }
 }

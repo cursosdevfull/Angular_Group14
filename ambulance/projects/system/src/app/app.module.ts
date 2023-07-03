@@ -1,7 +1,10 @@
+import { HttpClientModule } from '@angular/common/http';
 import { InjectionToken, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
+import { HoverDirective } from './directives/hover.directive';
+import { UploadDirective } from './directives/upload.directive';
 import { FormTaskComponent } from './form-task/form-task.component';
 import { ListTaskComponent } from './misComponentes/list-task.component';
 import { ShowTime } from './misComponentes/show-time.component';
@@ -32,8 +35,10 @@ export const LIST_TASKS = new InjectionToken<[]>('LIST_TASKS');
     ResponsableComponent,
     FormTaskComponent,
     RecortarPipe,
+    HoverDirective,
+    UploadDirective,
   ],
-  imports: [BrowserModule, TaskModule],
+  imports: [BrowserModule, TaskModule, HttpClientModule],
   providers: [
     /*{ provide: MyTokenTaskService, useClass: TaskService },
     { provide: MyTokenTareaService, useClass: TareaService },*/

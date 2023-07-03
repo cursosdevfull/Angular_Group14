@@ -6,3 +6,11 @@
     <amb-form-task (onAddTask)="addTask($event)"></amb-form-task>
   </div>
 </div>
+
+<div>
+  <div *ngFor="let photo of photos">
+    <h6>{{ photo.title }}</h6>
+    <h5>{{ photo.url }}</h5>
+    <img [src]="photo.thumbnailUrl" alt="" />
+  </div>
+</div>
