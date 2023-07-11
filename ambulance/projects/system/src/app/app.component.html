@@ -1,16 +1,3 @@
 <div class="container">
-  <div class="list-task">
-    <amb-list-task [tasks]="tasks"></amb-list-task>
-  </div>
-  <div class="form-task">
-    <amb-form-task (onAddTask)="addTask($event)"></amb-form-task>
-  </div>
-</div>
-
-<div>
-  <div *ngFor="let photo of photos">
-    <h6>{{ photo.title }}</h6>
-    <h5>{{ photo.url }}</h5>
-    <img [src]="photo.thumbnailUrl" alt="" />
-  </div>
+  <amb-login></amb-login>
 </div>

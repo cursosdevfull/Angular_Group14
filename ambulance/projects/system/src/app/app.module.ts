@@ -1,72 +1,15 @@
 import { HttpClientModule } from '@angular/common/http';
-import { InjectionToken, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { HoverDirective } from './directives/hover.directive';
-import { UploadDirective } from './directives/upload.directive';
-import { FormTaskComponent } from './form-task/form-task.component';
-import { ListTaskComponent } from './misComponentes/list-task.component';
-import { ShowTime } from './misComponentes/show-time.component';
-import { TaskModule } from './modules/task.module';
-import { RecortarPipe } from './pipes/recortar.pipe';
-import { ResponsableComponent } from './responsable/responsable.component';
-import { LogService } from './services/log.service';
-import { TareaService } from './services/tarea.service';
-import { TaskService } from './services/task.service';
-
-//export class MyTokenTaskService {}
-//export class MyTokenTareaService {}
-
-export const MyTokenTaskService = new InjectionToken<TaskService>(
-  'TaskService'
-);
-export const MyTokenTareaService = new InjectionToken<TareaService>(
-  'TareaService'
-);
-
-export const LIST_TASKS = new InjectionToken<[]>('LIST_TASKS');
+import { CoreModule } from './core/core.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ShowTime,
-    ListTaskComponent,
-    ResponsableComponent,
-    FormTaskComponent,
-    RecortarPipe,
-    HoverDirective,
-    UploadDirective,
-  ],
-  imports: [BrowserModule, TaskModule, HttpClientModule],
-  providers: [
-    /*{ provide: MyTokenTaskService, useClass: TaskService },
-    { provide: MyTokenTareaService, useClass: TareaService },*/
-    /*{ provide: TaskService, useClass: TaskService },
-    { provide: TareaService, useClass: TareaService },*/
-    TaskService,
-    TareaService,
-    {
-      //provide: 'DATA_MODAL',
-      provide: LIST_TASKS,
-      useValue: [
-        { id: 1, title: 'Task01' },
-        { id: 2, title: 'Task02' },
-      ],
-    },
-    {
-      provide: 'ENVIRONMENT_DEV',
-      useValue: 'dev',
-    },
-    {
-      provide: 'API_URL',
-      useFactory: (env: string) => {
-        return `http://localhost:3000/${env}`;
-      },
-      deps: ['ENVIRONMENT_DEV'],
-    },
-    LogService,
-  ],
+  declarations: [AppComponent],
+  imports: [BrowserModule, HttpClientModule, CoreModule, BrowserAnimationsModule],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
