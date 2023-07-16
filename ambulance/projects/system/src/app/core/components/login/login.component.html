@@ -12,20 +12,127 @@
     fxLayoutAlign="center center"
   >
     <h1>Ambulance App</h1>
-    <form fxLayout="column">
+    <form fxLayout="column" [formGroup]="fg">
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
         <mat-icon matPrefix>mail</mat-icon>
-        <input matInput type="text" required />
+        <input matInput type="text" formControlName="email" />
+        <mat-error
+          *ngIf="
+            fg.get('email')?.hasError('required') && fg.get('email')?.touched
+          "
+          >Must write any value to email</mat-error
+        >
+        <mat-error
+          *ngIf="
+            fg.get('email')?.hasError('pattern') && fg.get('email')?.touched
+          "
+          >It's not email</mat-error
+        >
+
+        <mat-error
+          *ngIf="
+            fg.get('email')?.hasError('domainNotAllowed') &&
+            fg.get('email')?.touched
+          "
+          >Domain not allowed</mat-error
+        >
       </mat-form-field>
+
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
         <mat-icon matPrefix>vpn_key</mat-icon>
-        <mat-icon matSuffix>visibility</mat-icon>
-        <input matInput type="password" required />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="setVisibility()"
+          type="button"
+        >
+          <mat-icon>{{
+            passwordHide ? "visibility" : "visibility_off"
+          }}</mat-icon>
+        </button>
+
+        <input
+          matInput
+          type="{{ passwordHide ? 'password' : 'text' }}"
+          formControlName="password"
+        />
+        <mat-error
+          *ngIf="
+            fg.get('password')?.hasError('required') &&
+            fg.get('password')?.touched
+          "
+          >Must write any value to password</mat-error
+        >
+
+        <mat-error
+          *ngIf="
+            (fg.get('password')?.hasError('minlength') ||
+              fg.get('password')?.hasError('maxlength')) &&
+            fg.get('password')?.touched
+          "
+          >Password must have between 4 and 8 characters</mat-error
+        >
       </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm password</mat-label>
+        <mat-icon matPrefix>vpn_key</mat-icon>
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="setVisibility()"
+          type="button"
+        >
+          <mat-icon>{{
+            passwordHide ? "visibility" : "visibility_off"
+          }}</mat-icon>
+        </button>
+
+        <input
+          matInput
+          type="{{ passwordHide ? 'password' : 'text' }}"
+          formControlName="confirmPassword"
+        />
+        <mat-error
+          *ngIf="
+            fg.get('confirmPassword')?.hasError('required') &&
+            fg.get('confirmPassword')?.touched
+          "
+          >Must write any value to confirm password</mat-error
+        >
+
+        <mat-error
+          *ngIf="
+            (fg.get('confirmPassword')?.hasError('minlength') ||
+              fg.get('confirmPassword')?.hasError('maxlength')) &&
+            fg.get('confirmPassword')?.touched
+          "
+          >Confirm password must have between 4 and 8 characters</mat-error
+        >
+        <mat-error
+          *ngIf="
+            fg.get('confirmPassword')?.hasError('passwordsDontMatch') &&
+            fg.get('confirmPassword')?.touched
+          "
+          >Password and confirm don't match</mat-error
+        >
+      </mat-form-field>
+
+      <mat-error *ngIf="fg?.hasError('passwordsDontMatch') && fg?.touched"
+        >Password2 and confirm don't match</mat-error
+      >
+
       <div fxLayout="column">
-        <button type="button" mat-raised-button color="primary">LOGIN</button>
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          (click)="login()"
+        >
+          LOGIN
+        </button>
       </div>
     </form>
   </div>

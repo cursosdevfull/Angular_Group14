@@ -13,5 +13,16 @@ h1 {
   font-style: italic;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+mat-error {
+  font-style: italic;
+  font-size: 12px;
+}
