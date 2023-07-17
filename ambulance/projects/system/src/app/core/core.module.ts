@@ -6,11 +6,28 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import player from 'lottie-web';
+import {
+  RECAPTCHA_SETTINGS,
+  RecaptchaFormsModule,
+  RecaptchaModule,
+  RecaptchaSettings,
+} from 'ng-recaptcha';
+import { LottieModule } from 'ngx-lottie';
 
+import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
+import { RecoveryComponent } from './components/recovery/recovery.component';
+import { RegisterComponent } from './components/register/register.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
+export function playerFactory() {
+  return player;
+}
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, HeaderComponent, RecoveryComponent, RegisterComponent, NotFoundComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,
@@ -19,7 +36,20 @@ import { LoginComponent } from './components/login/login.component';
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
+    LottieModule.forRoot({ player: playerFactory }),
+    MatToolbarModule,
+    MatMenuModule,
   ],
-  exports: [LoginComponent],
+  providers: [
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: {
+        siteKey: '6LcqVe8cAAAAAFKrdDeUow8MCAXl4XGMsm7XbS-T',
+      } as RecaptchaSettings,
+    },
+  ],
+  exports: [LoginComponent, HeaderComponent, RecoveryComponent, RegisterComponent, NotFoundComponent],
 })
 export class CoreModule {}

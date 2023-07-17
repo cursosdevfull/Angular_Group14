@@ -1,9 +1,23 @@
 <div
   class="container"
   fxLayout="row wrap"
-  fxLayoutAlign="end"
+  fxLayoutAlign="space-between"
   fxLayoutAlign.lt-md="center"
 >
+  <div
+    class="company"
+    fxFlex="1 1 60%"
+    fxLayout
+    fxLayoutAlign="start end"
+    fxHide.lt-md="true"
+  >
+    <ng-lottie [options]="options" [styles]="styles"></ng-lottie>
+    <!--<div>
+      <img src="/assets/images/logo-ambulancia.jpg" alt="" />
+    </div>
+    <h2>Ambulance App</h2>-->
+  </div>
+
   <div
     class="form-login"
     fxFlex="1 1 320px"
@@ -11,6 +25,9 @@
     fxLayout="column"
     fxLayoutAlign="center center"
   >
+    <div>
+      <img src="/assets/images/logo-ambulancia.jpg" alt="" />
+    </div>
     <h1>Ambulance App</h1>
     <form fxLayout="column" [formGroup]="fg">
       <mat-form-field appearance="outline">
@@ -28,14 +45,6 @@
             fg.get('email')?.hasError('pattern') && fg.get('email')?.touched
           "
           >It's not email</mat-error
-        >
-
-        <mat-error
-          *ngIf="
-            fg.get('email')?.hasError('domainNotAllowed') &&
-            fg.get('email')?.touched
-          "
-          >Domain not allowed</mat-error
         >
       </mat-form-field>
 
@@ -75,54 +84,9 @@
           >Password must have between 4 and 8 characters</mat-error
         >
       </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Confirm password</mat-label>
-        <mat-icon matPrefix>vpn_key</mat-icon>
-        <button
-          mat-icon-button
-          matSuffix
-          (click)="setVisibility()"
-          type="button"
-        >
-          <mat-icon>{{
-            passwordHide ? "visibility" : "visibility_off"
-          }}</mat-icon>
-        </button>
-
-        <input
-          matInput
-          type="{{ passwordHide ? 'password' : 'text' }}"
-          formControlName="confirmPassword"
-        />
-        <mat-error
-          *ngIf="
-            fg.get('confirmPassword')?.hasError('required') &&
-            fg.get('confirmPassword')?.touched
-          "
-          >Must write any value to confirm password</mat-error
-        >
-
-        <mat-error
-          *ngIf="
-            (fg.get('confirmPassword')?.hasError('minlength') ||
-              fg.get('confirmPassword')?.hasError('maxlength')) &&
-            fg.get('confirmPassword')?.touched
-          "
-          >Confirm password must have between 4 and 8 characters</mat-error
-        >
-        <mat-error
-          *ngIf="
-            fg.get('confirmPassword')?.hasError('passwordsDontMatch') &&
-            fg.get('confirmPassword')?.touched
-          "
-          >Password and confirm don't match</mat-error
-        >
-      </mat-form-field>
-
-      <mat-error *ngIf="fg?.hasError('passwordsDontMatch') && fg?.touched"
-        >Password2 and confirm don't match</mat-error
-      >
+      <div class="recaptcha">
+        <re-captcha formControlName="recaptcha"></re-captcha>
+      </div>
 
       <div fxLayout="column">
         <button
@@ -130,6 +94,7 @@
           mat-raised-button
           color="primary"
           (click)="login()"
+          [disabled]="fg.invalid"
         >
           LOGIN
         </button>

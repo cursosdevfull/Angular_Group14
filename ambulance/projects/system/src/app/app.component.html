@@ -1,3 +1,10 @@
-<div class="container">
-  <amb-login></amb-login>
-</div>
+<mat-sidenav-container>
+  <mat-sidenav #menuLateral opened="true" mode="side">
+    Aquí va el menú
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <amb-header></amb-header>
+    <router-outlet></router-outlet>
+    <!--<button (click)="menuLateral.open()">Abrir menu</button>-->
+  </mat-sidenav-content>
+</mat-sidenav-container>

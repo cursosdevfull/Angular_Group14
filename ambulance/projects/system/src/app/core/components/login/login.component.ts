@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'amb-login',
@@ -21,6 +15,15 @@ export class LoginComponent {
   fb: FormBuilder = new FormBuilder();
 
   domainsAllowed = ['company1.com', 'company2.com', 'company3.com'];
+
+  options: AnimationOptions = {
+    path: '/assets/lottiefiles/animation.json',
+  };
+
+  styles: Partial<CSSStyleDeclaration> = {
+    maxWidth: '80%',
+    maxHeight: '100vh',
+  };
 
   constructor() {
     this.setForm();
@@ -46,41 +49,38 @@ export class LoginComponent {
           Validators.required,
           Validators.pattern(this.patternEmailRegEx),
           //this.validateEmailDomain.bind(this),
-          this.validateEmailDomainAllowed(this.domainsAllowed),
+          //this.validateEmailDomainAllowed(this.domainsAllowed),
         ],
       ],
       password: [
         null,
         [Validators.required, Validators.minLength(4), Validators.maxLength(8)],
       ],
-      confirmPassword: [
+      recaptcha: [null, Validators.required],
+      /*confirmPassword: [
         null,
         [
           Validators.required,
           Validators.minLength(4),
           Validators.maxLength(8),
-          this.verifyPassswordAndConfirm,
+          //this.verifyPassswordAndConfirm,
         ],
-      ],
+      ],*/
     };
 
-    this.fg = this.fb.group(controls, {
+    this.fg = this.fb.group(
+      controls /*{
       validators: this.validateFieldsPassword,
-    });
+    }*/
+    );
   }
 
   login() {
-    console.log(this.fg);
     if (this.fg.valid) {
-      console.log('Form is valid');
-      //console.log(this.fg.value);
-      console.log(this.fg.getRawValue());
-    } else {
-      console.log('Form is invalid');
     }
   }
 
-  validateFieldsPassword(formGroup: FormGroup): ValidationErrors | null {
+  /*validateFieldsPassword(formGroup: FormGroup): ValidationErrors | null {
     if (!formGroup) return null;
 
     const password = formGroup.get('password')?.value;
@@ -130,5 +130,5 @@ export class LoginComponent {
 
       return { domainNotAllowed: true };
     };
-  }
+  }*/
 }

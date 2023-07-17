@@ -3,3 +3,14 @@
   height: 100vh;
   background-color: rgb(15, 23, 42);
 }
+
+mat-sidenav-container,
+mat-sidenav-content,
+mat-sidenav {
+  height: 100vh;
+}
+
+mat-sidenav {
+  width: 200px;
+  background-color: #dee2e6;
+}
