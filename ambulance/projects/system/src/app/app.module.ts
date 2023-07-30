@@ -3,25 +3,12 @@ import { NgModule } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule, Routes } from '@angular/router';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './core/components/login/login.component';
-import { NotFoundComponent } from './core/components/not-found/not-found.component';
-import { RecoveryComponent } from './core/components/recovery/recovery.component';
-import { RegisterComponent } from './core/components/register/register.component';
+import { LAYOUT_CONSTANTS } from './config/modules/layout/layout.constant';
+import { LayoutModule } from './config/modules/layout/layout.module';
 import { CoreModule } from './core/core.module';
-import { BaseComponent } from './dashboard/components/base/base.component';
-import { DashboardModule } from './dashboard/dashboard.module';
-
-const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'recovery', component: RecoveryComponent },
-  { path: 'dashboard', component: BaseComponent },
-  { path: '**', component: NotFoundComponent },
-  //{ path: '**', redirectTo: '' },
-];
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,8 +18,8 @@ const routes: Routes = [
     CoreModule,
     BrowserAnimationsModule,
     MatSidenavModule,
-    RouterModule.forRoot(routes),
-    DashboardModule,
+    LayoutModule.forRoot(LAYOUT_CONSTANTS),
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

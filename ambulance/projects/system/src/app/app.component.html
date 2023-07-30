@@ -1,9 +1,9 @@
 <mat-sidenav-container>
-  <mat-sidenav #menuLateral opened="true" mode="side">
-    Aquí va el menú
+  <mat-sidenav #menuLateral opened="true" mode="side" *ngIf="showMenu">
+    <amb-menu></amb-menu>
   </mat-sidenav>
   <mat-sidenav-content>
-    <amb-header></amb-header>
+    <amb-header *ngIf="showToolbar"></amb-header>
     <router-outlet></router-outlet>
     <!--<button (click)="menuLateral.open()">Abrir menu</button>-->
   </mat-sidenav-content>

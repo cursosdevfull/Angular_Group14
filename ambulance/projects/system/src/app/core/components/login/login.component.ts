@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AnimationOptions } from 'ngx-lottie';
+
+import { LayoutService } from '../../../config/modules/layout/layout.service';
 
 @Component({
   selector: 'amb-login',
@@ -25,8 +28,12 @@ export class LoginComponent {
     maxHeight: '100vh',
   };
 
-  constructor() {
+  constructor(
+    private readonly layout: LayoutService,
+    private readonly router: Router
+  ) {
     this.setForm();
+    this.layout.configuration = { menu: false, toolbar: false };
   }
 
   setVisibility() {
@@ -34,101 +41,24 @@ export class LoginComponent {
   }
 
   setForm() {
-    /*this.fg = new FormGroup({
-      email: new FormControl(null, [
-        Validators.required,
-        Validators.pattern(this.patternEmailRegEx),
-      ]),
-      password: new FormControl(null, Validators.required),
-    });*/
-
     const controls = {
       email: [
         null,
-        [
-          Validators.required,
-          Validators.pattern(this.patternEmailRegEx),
-          //this.validateEmailDomain.bind(this),
-          //this.validateEmailDomainAllowed(this.domainsAllowed),
-        ],
+        [Validators.required, Validators.pattern(this.patternEmailRegEx)],
       ],
       password: [
         null,
         [Validators.required, Validators.minLength(4), Validators.maxLength(8)],
       ],
       recaptcha: [null, Validators.required],
-      /*confirmPassword: [
-        null,
-        [
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(8),
-          //this.verifyPassswordAndConfirm,
-        ],
-      ],*/
     };
 
-    this.fg = this.fb.group(
-      controls /*{
-      validators: this.validateFieldsPassword,
-    }*/
-    );
+    this.fg = this.fb.group(controls);
   }
 
   login() {
     if (this.fg.valid) {
+      this.router.navigate(['/dashboard']);
     }
   }
-
-  /*validateFieldsPassword(formGroup: FormGroup): ValidationErrors | null {
-    if (!formGroup) return null;
-
-    const password = formGroup.get('password')?.value;
-    const confirmPassword = formGroup.get('confirmPassword')?.value;
-
-    if (!password || !confirmPassword) return null;
-
-    if (password === confirmPassword) return null;
-
-    return { passwordsDontMatch: true };
-  }
-
-  validateEmailDomain(control: AbstractControl) {
-    if (!control || !control.value) return null;
-
-    const partsEmail = control.value.split('@');
-    if (partsEmail.length <= 1) return null;
-
-    const domain = partsEmail[1];
-    if (this.domainsAllowed.indexOf(domain) > -1) return null;
-
-    return { domainNotAllowed: true };
-  }
-
-  verifyPassswordAndConfirm(control: AbstractControl) {
-    if (!control) return null;
-
-    const password = control.parent?.get('password')?.value;
-    const confirmPassword = control.parent?.get('confirmPassword')?.value;
-
-    if (!password || !confirmPassword) return null;
-
-    if (password === confirmPassword) return null;
-
-    return { passwordsDontMatch: true };
-  }
-
-  validateEmailDomainAllowed(domainsAllowed: string[]): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      if (!control || !control.value) return null;
-
-      const partsEmail = control.value.split('@');
-      if (partsEmail.length <= 1) return null;
-
-      const domain = partsEmail[1];
-      if (domainsAllowed.indexOf(domain) > -1) return null;
-
-      return { domainNotAllowed: true };
-    };
-  }*/
 }

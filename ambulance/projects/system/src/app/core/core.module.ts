@@ -6,8 +6,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterModule } from '@angular/router';
 import player from 'lottie-web';
 import {
   RECAPTCHA_SETTINGS,
@@ -19,15 +21,23 @@ import { LottieModule } from 'ngx-lottie';
 
 import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RecoveryComponent } from './components/recovery/recovery.component';
 import { RegisterComponent } from './components/register/register.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
 
 export function playerFactory() {
   return player;
 }
 @NgModule({
-  declarations: [LoginComponent, HeaderComponent, RecoveryComponent, RegisterComponent, NotFoundComponent],
+  declarations: [
+    LoginComponent,
+    HeaderComponent,
+    RecoveryComponent,
+    RegisterComponent,
+    NotFoundComponent,
+    MenuComponent,
+  ],
   imports: [
     CommonModule,
     FlexLayoutModule,
@@ -41,6 +51,8 @@ export function playerFactory() {
     LottieModule.forRoot({ player: playerFactory }),
     MatToolbarModule,
     MatMenuModule,
+    MatListModule,
+    RouterModule,
   ],
   providers: [
     {
@@ -50,6 +62,13 @@ export function playerFactory() {
       } as RecaptchaSettings,
     },
   ],
-  exports: [LoginComponent, HeaderComponent, RecoveryComponent, RegisterComponent, NotFoundComponent],
+  exports: [
+    LoginComponent,
+    HeaderComponent,
+    RecoveryComponent,
+    RegisterComponent,
+    NotFoundComponent,
+    MenuComponent,
+  ],
 })
 export class CoreModule {}
