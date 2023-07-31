@@ -1,0 +1,18 @@
+<div class="toolbar" fxLayout fxLayoutAlign="space-between">
+  <div fxLayout fxLayoutAlign="start center" fxLayoutGap="16px" class="info">
+    <mat-icon>{{ icon }}</mat-icon>
+    <h2>{{ title }}</h2>
+  </div>
+
+  <!--<div fxLayout fxLayoutAlign="start center">
+    <ng-content select=".medium"></ng-content>
+  </div>
+
+  <div fxLayout fxLayoutAlign="start center">
+    <ng-content select="[first]"></ng-content>
+  </div>-->
+
+  <div fxLayout fxLayoutAlign="start center">
+    <ng-content></ng-content>
+  </div>
+</div>
