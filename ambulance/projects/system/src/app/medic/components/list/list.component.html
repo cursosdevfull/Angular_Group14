@@ -7,3 +7,15 @@
     <mat-icon>download</mat-icon>
   </button>
 </amb-title>
+<amb-container>
+  <ng-scrollbar class="maxHeightScrollbar">
+    <amb-table [data]="data" [metaData]="metaData"></amb-table>
+  </ng-scrollbar>
+  <div fxLayout fxLayoutAlign="end">
+    <amb-paginator
+      [quantyRecords]="dataOriginal.length"
+      (onPageChanged)="pageChanged($event)"
+      [pageSize]="20"
+    ></amb-paginator>
+  </div>
+</amb-container>

@@ -3,14 +3,25 @@
     <mat-icon>add</mat-icon>
     <span>ADD DRIVER</span>
   </button>
-
-  <!--<button mat-raised-button color="primary" class="medium">
-    <mat-icon>add</mat-icon>
-    <span>Medium</span>
-  </button>
-
-  <button mat-raised-button color="primary" first>
-    <mat-icon>add</mat-icon>
-    <span>First</span>
-  </button>-->
 </amb-title>
+<amb-container>
+  <ng-scrollbar class="maxHeightScrollbar">
+    <amb-table [data]="data" [metaData]="metaData"></amb-table>
+  </ng-scrollbar>
+  <div fxLayout fxLayoutAlign="space-between center">
+    <button
+      mat-flat-button
+      color="warn"
+      class="margin-left"
+      (click)="showOptionsExport()"
+    >
+      <mat-icon>download_for_offline</mat-icon>
+      Exportar
+    </button>
+    <amb-paginator
+      [quantyRecords]="dataOriginal.length"
+      (onPageChanged)="pageChanged($event)"
+      [pageSize]="20"
+    ></amb-paginator>
+  </div>
+</amb-container>
