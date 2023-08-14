@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 
 import { SharedModule } from '../shared/shared.module';
@@ -9,6 +10,6 @@ import { UserRoutingModule } from './user-routing.module';
 
 @NgModule({
   declarations: [FormComponent, ListComponent],
-  imports: [CommonModule, UserRoutingModule, SharedModule, NgScrollbarModule],
+  imports: [CommonModule, UserRoutingModule, SharedModule, NgScrollbarModule, FlexLayoutModule],
 })
 export class UserModule {}

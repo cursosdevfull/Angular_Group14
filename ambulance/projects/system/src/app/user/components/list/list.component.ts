@@ -1,18 +1,35 @@
 import { Component } from '@angular/core';
 
 import { LayoutService } from '../../../config/modules/layout/layout.service';
-import { BaseComponent } from '../../../shared/abstractions/base-component';
+import {
+  BaseComponent,
+  Modal,
+} from '../../../shared/abstractions/base-component';
+import { Metadata } from '../../../shared/interfaces/metadata.interface';
+import { UtilsService } from '../../../shared/services/utils.service';
+import { FormComponent } from '../form/form.component';
 
+export interface IUser {
+  id: number;
+  name: string;
+  lastname: string;
+  area: string;
+}
 @Component({
   selector: 'amb-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
 })
-export class ListComponent extends BaseComponent {
+export class ListComponent extends BaseComponent<IUser> {
   readonly title = 'USER';
   readonly icon = 'face';
 
-  dataOriginal = [
+  modalNewUpdate: Modal = {
+    component: FormComponent,
+    panelClass: 'modal-user',
+  };
+
+  dataOriginal: IUser[] = [
     {
       id: 1,
       name: 'Carlos',
@@ -33,8 +50,8 @@ export class ListComponent extends BaseComponent {
     },
   ];
 
-  data: any = [];
-  metaData = [
+  data: IUser[] = [];
+  metaData: Metadata[] = [
     {
       field: 'id',
       title: 'ID',
@@ -53,13 +70,14 @@ export class ListComponent extends BaseComponent {
     },
   ];
 
-  constructor(private readonly layoutService: LayoutService) {
-    super();
-    this.layoutService.configuration = { menu: true, toolbar: true };
-    this.pageChanged(0);
-  }
+  filename = 'Usuarios';
+  sheetName = 'Lista de usuarios';
 
-  pageChanged(pageNumber: number) {
-    this.data = this.dataOriginal.slice(pageNumber * 20, pageNumber * 20 + 20);
+  constructor(
+    protected override layoutService: LayoutService,
+    protected override utilsService: UtilsService
+  ) {
+    super(layoutService, utilsService);
+    this.pageChanged(0);
   }
 }

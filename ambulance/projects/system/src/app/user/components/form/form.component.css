@@ -1,0 +1,9 @@
+.modal-user {
+  width: 800px;
+}
+
+@media screen and (max-width: 500px) {
+  .modal-user {
+    width: 400px;
+  }
+}

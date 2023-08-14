@@ -1,20 +1,31 @@
 import { Component } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 import { LayoutService } from '../../../config/modules/layout/layout.service';
-import { BaseComponent } from '../../../shared/abstractions/base-component';
-import { ExportComponent } from '../../../shared/components/export/export.component';
+import {
+  BaseComponent,
+  Modal,
+} from '../../../shared/abstractions/base-component';
+import { Metadata } from '../../../shared/interfaces/metadata.interface';
+import { UtilsService } from '../../../shared/services/utils.service';
+import { FormComponent } from '../form/form.component';
 
+export interface IDriver {
+  id: number;
+  name: string;
+  lastname: string;
+  license: string;
+  gender: string;
+}
 @Component({
   selector: 'amb-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
 })
-export class ListComponent extends BaseComponent {
+export class ListComponent extends BaseComponent<IDriver> {
   readonly title = 'DRIVER';
   readonly icon = 'folder';
 
-  dataOriginal = [
+  dataOriginal: IDriver[] = [
     {
       id: 1,
       name: 'Carlos',
@@ -436,8 +447,8 @@ export class ListComponent extends BaseComponent {
       gender: 'Masculino',
     },
   ];
-  data: any = [];
-  metaData = [
+  data: IDriver[] = [];
+  metaData: Metadata[] = [
     {
       field: 'id',
       title: 'ID',
@@ -460,21 +471,19 @@ export class ListComponent extends BaseComponent {
     },
   ];
 
+  filename = 'Conductores';
+  sheetName = 'Lista de conductores';
+  modalNewUpdate: Modal = {
+    component: FormComponent,
+    panelClass: 'modal-driver',
+  };
+
   constructor(
-    private readonly layoutService: LayoutService,
-    private readonly bottonSheet: MatBottomSheet
+    protected override layoutService: LayoutService,
+    protected override utilsService: UtilsService
   ) {
-    super();
-    this.layoutService.configuration = { menu: true, toolbar: true };
+    super(layoutService, utilsService);
     this.pageChanged(0);
-  }
-
-  pageChanged(pageNumber: number) {
-    this.data = this.dataOriginal.slice(pageNumber * 20, pageNumber * 20 + 20);
-  }
-
-  showOptionsExport() {
-    this.bottonSheet.open(ExportComponent);
   }
 
   openAlert() {

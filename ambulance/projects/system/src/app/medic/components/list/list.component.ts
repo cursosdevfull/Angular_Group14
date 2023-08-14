@@ -1,18 +1,36 @@
 import { Component } from '@angular/core';
 
 import { LayoutService } from '../../../config/modules/layout/layout.service';
-import { BaseComponent } from '../../../shared/abstractions/base-component';
+import {
+  BaseComponent,
+  Modal,
+} from '../../../shared/abstractions/base-component';
+import { UtilsService } from '../../../shared/services/utils.service';
+import { FormComponent } from '../form/form.component';
 
+export interface IMedic {
+  id: number;
+  name: string;
+  lastname: string;
+  dni: string;
+  cmp: string;
+  incomes: number;
+}
 @Component({
   selector: 'amb-list-medic',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
 })
-export class ListComponent extends BaseComponent {
+export class ListComponent extends BaseComponent<IMedic> {
   readonly title = 'MEDIC';
   readonly icon = 'settings_accesibility';
 
-  dataOriginal = [
+  modalNewUpdate: Modal = {
+    component: FormComponent,
+    panelClass: 'modal-medic',
+  };
+
+  dataOriginal: IMedic[] = [
     {
       id: 1,
       name: 'Carlos',
@@ -39,7 +57,7 @@ export class ListComponent extends BaseComponent {
     },
   ];
 
-  data: any = [];
+  data: IMedic[] = [];
 
   metaData = [
     {
@@ -68,15 +86,14 @@ export class ListComponent extends BaseComponent {
     },
   ];
 
-  columns = ['id', 'cmp', 'name', 'lastname', 'dni', 'incomes'];
+  filename = 'Médicos';
+  sheetName = 'Lista de médicos';
 
-  constructor(private readonly layoutService: LayoutService) {
-    super();
-    this.layoutService.configuration = { menu: true, toolbar: true };
+  constructor(
+    protected override layoutService: LayoutService,
+    protected override utilsService: UtilsService
+  ) {
+    super(layoutService, utilsService);
     this.pageChanged(0);
-  }
-
-  pageChanged(pageNumber: number) {
-    this.data = this.dataOriginal.slice(pageNumber * 20, pageNumber * 20 + 20);
   }
 }

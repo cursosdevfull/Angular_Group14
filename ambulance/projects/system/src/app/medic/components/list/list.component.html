@@ -1,17 +1,23 @@
 <amb-title [title]="title" [icon]="icon">
-  <button mat-raised-button color="primary">
+  <button mat-raised-button color="primary" (click)="openForm()">
     <mat-icon>add</mat-icon>
     <span>ADD MEDIC</span>
-  </button>
-  <button mat-icon-button color="accent">
-    <mat-icon>download</mat-icon>
   </button>
 </amb-title>
 <amb-container>
   <ng-scrollbar class="maxHeightScrollbar">
     <amb-table [data]="data" [metaData]="metaData"></amb-table>
   </ng-scrollbar>
-  <div fxLayout fxLayoutAlign="end">
+  <div fxLayout fxLayoutAlign="space-between center">
+    <button
+      mat-flat-button
+      color="warn"
+      class="margin-left"
+      (click)="showOptionsExport()"
+    >
+      <mat-icon>download_for_offline</mat-icon>
+      Exportar
+    </button>
     <amb-paginator
       [quantyRecords]="dataOriginal.length"
       (onPageChanged)="pageChanged($event)"
