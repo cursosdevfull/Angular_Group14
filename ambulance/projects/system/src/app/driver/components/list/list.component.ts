@@ -7,6 +7,8 @@ import {
 } from '../../../shared/abstractions/base-component';
 import { Metadata } from '../../../shared/interfaces/metadata.interface';
 import { UtilsService } from '../../../shared/services/utils.service';
+import { DriverGetAllApplication } from '../../application/driver-get-all-application';
+import { DriverGetByPageApplication } from '../../application/driver-get-by-page.application';
 import { FormComponent } from '../form/form.component';
 
 export interface IDriver {
@@ -480,10 +482,17 @@ export class ListComponent extends BaseComponent<IDriver> {
 
   constructor(
     protected override layoutService: LayoutService,
-    protected override utilsService: UtilsService
+    protected override utilsService: UtilsService,
+    private readonly driverGetAllApplication: DriverGetAllApplication,
+    private readonly driverGetByPageApplication: DriverGetByPageApplication
   ) {
     super(layoutService, utilsService);
     this.pageChanged(0);
+
+    this.driverGetByPageApplication.execute(0).subscribe({
+      next: console.log,
+      error: console.error,
+    });
   }
 
   openAlert() {

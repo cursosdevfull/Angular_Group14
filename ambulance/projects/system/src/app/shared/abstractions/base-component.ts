@@ -40,10 +40,11 @@ export abstract class BaseComponent<Entity> {
     });
   }
 
-  openForm() {
-    this.utilsService.showModal({
+  openForm(record?: Entity) {
+    this.utilsService.showModal<Entity>({
       classComponent: this.modalNewUpdate.component,
       panelClass: this.modalNewUpdate.panelClass,
+      data: record,
     });
   }
 }

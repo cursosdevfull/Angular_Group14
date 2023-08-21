@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AnimationOptions } from 'ngx-lottie';
 
+import { AuthLoginApplication } from '../../../auth/application/auth-login.application';
+import { Auth } from '../../../auth/domain/auth';
+import { AuthFactory } from '../../../auth/domain/auth.factory';
 import { LayoutService } from '../../../config/modules/layout/layout.service';
 
 @Component({
@@ -30,7 +33,8 @@ export class LoginComponent {
 
   constructor(
     private readonly layout: LayoutService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly application: AuthLoginApplication
   ) {
     this.setForm();
     this.layout.configuration = { menu: false, toolbar: false };
@@ -58,7 +62,14 @@ export class LoginComponent {
 
   login() {
     if (this.fg.valid) {
-      this.router.navigate(['/dashboard']);
+      const auth: Auth = AuthFactory.create(
+        this.fg.value.email,
+        this.fg.value.password,
+        this.fg.value.recaptcha
+      );
+      this.application.execute(auth);
+
+      //this.router.navigate(['/dashboard']);
     }
   }
 }

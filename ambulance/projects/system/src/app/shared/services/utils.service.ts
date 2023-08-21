@@ -59,10 +59,15 @@ export class UtilsService {
     */
   }
 
-  showModal(params: { classComponent: any; panelClass: string }) {
+  showModal<Entity>(params: {
+    classComponent: any;
+    panelClass: string;
+    data?: Entity;
+  }) {
     this.dialog.open(params.classComponent, {
       panelClass: params.panelClass,
       disableClose: true,
+      data: params.data,
     });
   }
 

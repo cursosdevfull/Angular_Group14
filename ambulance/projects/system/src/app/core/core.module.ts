@@ -19,6 +19,8 @@ import {
 } from 'ng-recaptcha';
 import { LottieModule } from 'ngx-lottie';
 
+import { AuthLoginApplication } from '../auth/application/auth-login.application';
+import { AuthInfrastructure } from '../auth/infrastructure/auth.infrastructure';
 import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
@@ -29,6 +31,10 @@ import { RegisterComponent } from './components/register/register.component';
 export function playerFactory() {
   return player;
 }
+
+const applicationProviders = [AuthLoginApplication];
+const infrastructureProviders = [AuthInfrastructure];
+
 @NgModule({
   declarations: [
     LoginComponent,
@@ -55,6 +61,8 @@ export function playerFactory() {
     RouterModule,
   ],
   providers: [
+    ...applicationProviders,
+    ...infrastructureProviders,
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: {
