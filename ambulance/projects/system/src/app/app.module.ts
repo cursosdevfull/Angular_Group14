@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthLoginApplication } from './auth/application/auth-login.application';
+import { AuthLogoutApplication } from './auth/application/auth-logout.application';
 import { StorageCleanApplication } from './auth/application/storage-clean.application';
 import { StorageRecoveryApplication } from './auth/application/storage-recovery.application';
 import { StorageSaveApplication } from './auth/application/storage-save.application';
@@ -17,15 +18,19 @@ import { LAYOUT_CONSTANTS } from './config/modules/layout/layout.constant';
 import { LayoutModule } from './config/modules/layout/layout.module';
 import { CoreModule } from './core/core.module';
 import { Paginator } from './shared/clases/paginator';
+import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { IconService } from './shared/services/icon.service';
 
 const applicationProviders = [
   AuthLoginApplication,
+  AuthLogoutApplication,
   StorageSaveApplication,
   StorageCleanApplication,
   StorageRecoveryApplication,
 ];
 const infrastructureProviders = [AuthInfrastructure, StorageInfrastructure];
+
+const interceptors = [TokenInterceptor];
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,9 +47,15 @@ const infrastructureProviders = [AuthInfrastructure, StorageInfrastructure];
   providers: [
     ...applicationProviders,
     ...infrastructureProviders,
+    ...interceptors,
     {
       provide: MatPaginatorIntl,
       useClass: Paginator,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
     },
   ],
   bootstrap: [AppComponent],

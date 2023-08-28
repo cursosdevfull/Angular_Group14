@@ -80,4 +80,8 @@ export class ListComponent extends BaseComponent<IUser> {
     super(layoutService, utilsService);
     this.pageChanged(0);
   }
+
+  fromDomainToData(data: any): any {
+    return {};
+  }
 }

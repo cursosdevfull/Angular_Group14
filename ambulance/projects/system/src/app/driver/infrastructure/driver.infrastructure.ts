@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
 
+import { environment } from '../../../environments/environment';
 import { StorageInfrastructure } from '../../auth/infrastructure/storage.infrastructure';
 import { Driver } from '../domain/driver';
 import { DriverRepository } from '../domain/repositories/driver.repository';
@@ -15,46 +16,45 @@ export class DriverInfrastructure implements DriverRepository {
   ) {}
 
   create(driver: Driver): Observable<any> {
-    return of([]);
+    const apiPath = environment.API_REST_URL;
+    const endpointUrl = `${apiPath}/drivers`;
+
+    return this.http.post(endpointUrl, driver);
   }
-  update(driver: Driver): Observable<any> {
-    return of([]);
+  update(id: number, driver: any): Observable<any> {
+    const apiPath = environment.API_REST_URL;
+    const endpointUrl = `${apiPath}/drivers/${id}`;
+
+    return this.http.put(endpointUrl, driver);
   }
-  delete(driver: Driver): Observable<any> {
-    return of([]);
+  delete(id: number): Observable<any> {
+    const apiPath = environment.API_REST_URL;
+    const endpointUrl = `${apiPath}/drivers/${id}`;
+
+    return this.http.delete(endpointUrl);
   }
   get(id: number): Observable<any> {
     return of([]);
   }
   getAll(): Observable<any> {
-    const apiPath = 'https://api-cursoangular.cursos-dev.com';
+    const apiPath = environment.API_REST_URL;
     const endpointUrl = `${apiPath}/drivers`;
 
-    const accessToken = this.infrastructureStorage.recovery('accessToken');
-
     return this.http
-      .get(endpointUrl, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
+      .get(endpointUrl)
       .pipe(map((response: any) => DriverGetAllDto.fromDataToResult(response)));
   }
   getByPage(page: number): Observable<any> {
-    const apiPath = 'https://api-cursoangular.cursos-dev.com';
-    const endpointUrl = `${apiPath}/drivers/page/${page}/10`;
+    const apiPath = environment.API_REST_URL;
+    const endpointUrl = `${apiPath}/drivers/page/${page}/${environment.AMOUNT_RECORDS_PER_PAGE}`;
 
-    const accessToken = this.infrastructureStorage.recovery('accessToken');
-
-    return this.http
-      .get(endpointUrl, {
-        headers: { Authorization: `Bearer ${accessToken}` },
+    return this.http.get(endpointUrl).pipe(
+      map((response: any) => {
+        return {
+          results: DriverGetAllDto.fromDataToResult(response.records),
+          total: response.totalRecords,
+        };
       })
-      .pipe(
-        map((response: any) => {
-          return {
-            results: DriverGetAllDto.fromDataToResult(response.records),
-            total: response.totalRecords,
-          };
-        })
-      );
+    );
   }
 }

@@ -1,0 +1,9 @@
+@startuml
+boundary Request
+participant Clonador
+control AddHeader
+collections Backend
+Request -> Clonador : request
+Clonador -> AddHeader : add header authorization
+AddHeader -> Backend : request cloned
+@enduml

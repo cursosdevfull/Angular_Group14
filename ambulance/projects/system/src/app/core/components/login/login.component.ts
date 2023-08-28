@@ -68,8 +68,6 @@ export class LoginComponent {
         this.fg.value.recaptcha
       );
       this.application.execute(auth);
-
-      //this.router.navigate(['/dashboard']);
     }
   }
 }

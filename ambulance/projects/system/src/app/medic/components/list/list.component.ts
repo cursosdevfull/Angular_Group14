@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 
 import { LayoutService } from '../../../config/modules/layout/layout.service';
+import { MedicCreateApplication } from '../../../medic/application/medic-create.application';
+import { MedicDeleteApplication } from '../../../medic/application/medic-delete.application';
+import { MedicGetAllApplication } from '../../../medic/application/medic-get-all-application';
+import { MedicGetByPageApplication } from '../../../medic/application/medic-get-by-page.application';
+import { MedicUpdateApplication } from '../../../medic/application/medic-update.application';
 import {
   BaseComponent,
   Modal,
@@ -11,10 +16,12 @@ import { FormComponent } from '../form/form.component';
 export interface IMedic {
   id: number;
   name: string;
+  secondname: string;
   lastname: string;
   dni: string;
   cmp: string;
-  incomes: number;
+  email: string;
+  photo: string;
 }
 @Component({
   selector: 'amb-list-medic',
@@ -30,33 +37,6 @@ export class ListComponent extends BaseComponent<IMedic> {
     panelClass: 'modal-medic',
   };
 
-  dataOriginal: IMedic[] = [
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      dni: '12345678',
-      cmp: '123456',
-      incomes: 20000,
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      dni: '12345678',
-      cmp: '123456',
-      incomes: 14000,
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      dni: '12345678',
-      cmp: '123456',
-      incomes: 30000,
-    },
-  ];
-
   data: IMedic[] = [];
 
   metaData = [
@@ -65,24 +45,28 @@ export class ListComponent extends BaseComponent<IMedic> {
       title: 'ID',
     },
     {
-      field: 'cmp',
-      title: 'CMP',
-    },
-    {
       field: 'name',
       title: 'Nombres',
     },
     {
+      field: 'secondname',
+      title: 'Segundo nombre',
+    },
+    {
       field: 'lastname',
-      title: 'Apellidos',
+      title: 'Apellido',
     },
     {
       field: 'dni',
       title: 'DNI',
     },
     {
-      field: 'incomes',
-      title: 'Ingresos',
+      field: 'cmp',
+      title: 'CMP',
+    },
+    {
+      field: 'email',
+      title: 'Correo',
     },
   ];
 
@@ -91,9 +75,38 @@ export class ListComponent extends BaseComponent<IMedic> {
 
   constructor(
     protected override layoutService: LayoutService,
-    protected override utilsService: UtilsService
+    protected override utilsService: UtilsService,
+    protected readonly medicGetAllApplication: MedicGetAllApplication,
+    protected readonly medicGetByPageApplication: MedicGetByPageApplication,
+    protected readonly medicCreateApplication: MedicCreateApplication,
+    protected readonly medicUpdateApplication: MedicUpdateApplication,
+    protected readonly medicDeleteApplication: MedicDeleteApplication
   ) {
-    super(layoutService, utilsService);
+    super(
+      layoutService,
+      utilsService,
+      medicGetByPageApplication,
+      medicGetAllApplication,
+      medicCreateApplication,
+      medicUpdateApplication,
+      medicDeleteApplication
+    );
     this.pageChanged(0);
+  }
+
+  ngOnDestroy() {
+    this.destroySubscriptions.next();
+    this.destroySubscriptions.unsubscribe();
+  }
+
+  fromDomainToData(data: any): any {
+    return {
+      nombre: data.name,
+      segundo_nombre: data.secondname,
+      apellido: data.lastname,
+      dni: data.dni,
+      cmp: data.cmp,
+      correo: data.email,
+    };
   }
 }

@@ -1,0 +1,16 @@
+@startuml
+participant Frontend
+participant Backend
+Frontend -> Backend: POST /login {email, password}
+activate Backend
+Backend -> Frontend: 200 OK {accessToken, refreshToken}
+activate Frontend
+Frontend -> Backend: GET /users {accessToken}
+Backend -> Frontend: 200 OK {users}
+Backend -> Frontend: 409 Conflict {message: token expired}
+Frontend -> Backend: POST /new-access-token {refreshToken}
+Backend -> Frontend: 200 OK {newAccessToken, newRefreshToken}
+Frontend -> Backend: GET /users {newAccessToken}
+Backend -> Frontend: 200 OK {users}
+Backend -> Frontend: 401 Unauthorized {message: invalid token}
+@enduml

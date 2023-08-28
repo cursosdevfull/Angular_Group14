@@ -7,16 +7,17 @@ import {
 } from '../../../shared/abstractions/base-component';
 import { Metadata } from '../../../shared/interfaces/metadata.interface';
 import { UtilsService } from '../../../shared/services/utils.service';
+import { DriverCreateApplication } from '../../application/driver-create.application';
+import { DriverDeleteApplication } from '../../application/driver-delete.application';
 import { DriverGetAllApplication } from '../../application/driver-get-all-application';
 import { DriverGetByPageApplication } from '../../application/driver-get-by-page.application';
+import { DriverUpdateApplication } from '../../application/driver-update.application';
 import { FormComponent } from '../form/form.component';
 
 export interface IDriver {
   id: number;
   name: string;
-  lastname: string;
-  license: string;
-  gender: string;
+  active: number;
 }
 @Component({
   selector: 'amb-list',
@@ -27,428 +28,6 @@ export class ListComponent extends BaseComponent<IDriver> {
   readonly title = 'DRIVER';
   readonly icon = 'folder';
 
-  dataOriginal: IDriver[] = [
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 1,
-      name: 'Carlos',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 2,
-      name: 'Juan',
-      lastname: 'Perez',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-    {
-      id: 3,
-      name: 'Pedro',
-      lastname: 'Sotomayor',
-      license: '12345678',
-      gender: 'Masculino',
-    },
-  ];
   data: IDriver[] = [];
   metaData: Metadata[] = [
     {
@@ -457,19 +36,7 @@ export class ListComponent extends BaseComponent<IDriver> {
     },
     {
       field: 'name',
-      title: 'Nombres',
-    },
-    {
-      field: 'lastname',
-      title: 'Apellidos',
-    },
-    {
-      field: 'license',
-      title: 'Licencia',
-    },
-    {
-      field: 'gender',
-      title: 'Género',
+      title: 'Nombre',
     },
   ];
 
@@ -483,19 +50,32 @@ export class ListComponent extends BaseComponent<IDriver> {
   constructor(
     protected override layoutService: LayoutService,
     protected override utilsService: UtilsService,
-    private readonly driverGetAllApplication: DriverGetAllApplication,
-    private readonly driverGetByPageApplication: DriverGetByPageApplication
+    protected readonly driverGetAllApplication: DriverGetAllApplication,
+    protected readonly driverGetByPageApplication: DriverGetByPageApplication,
+    protected readonly driverCreateApplication: DriverCreateApplication,
+    protected readonly driverUpdateApplication: DriverUpdateApplication,
+    protected readonly driverDeleteApplication: DriverDeleteApplication
   ) {
-    super(layoutService, utilsService);
+    super(
+      layoutService,
+      utilsService,
+      driverGetByPageApplication,
+      driverGetAllApplication,
+      driverCreateApplication,
+      driverUpdateApplication,
+      driverDeleteApplication
+    );
     this.pageChanged(0);
-
-    this.driverGetByPageApplication.execute(0).subscribe({
-      next: console.log,
-      error: console.error,
-    });
   }
 
-  openAlert() {
-    alert('Componente para agregar');
+  ngOnDestroy() {
+    this.destroySubscriptions.next();
+    this.destroySubscriptions.unsubscribe();
+  }
+
+  fromDomainToData(data: any): any {
+    return {
+      nombre: data.name,
+    };
   }
 }

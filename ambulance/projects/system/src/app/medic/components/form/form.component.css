@@ -1,3 +1,12 @@
 .modal-medic {
   width: 800px;
 }
+
+.modal-medic .mat-dialog-container {
+  padding: 0 !important;
+}
+
+.modal-medic .mat-dialog-content {
+  padding: 24px;
+  margin: 0;
+}

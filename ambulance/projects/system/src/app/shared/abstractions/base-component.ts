@@ -1,3 +1,7 @@
+import { MatDialogRef } from '@angular/material/dialog';
+import { Subject, takeUntil } from 'rxjs';
+
+import { environment } from '../../../environments/environment';
 import { LayoutService } from '../../config/modules/layout/layout.service';
 import { ExportComponent } from '../components/export/export.component';
 import { Metadata } from '../interfaces/metadata.interface';
@@ -11,7 +15,7 @@ export interface Modal {
 export abstract class BaseComponent<Entity> {
   abstract readonly title: string;
   abstract readonly icon: string;
-  abstract dataOriginal: Entity[];
+
   abstract data: Entity[];
   abstract metaData: Metadata[];
   abstract modalNewUpdate: Modal;
@@ -19,32 +23,118 @@ export abstract class BaseComponent<Entity> {
   abstract filename: string;
   abstract sheetName: string;
 
+  amountRecords: number = 0;
+  currentPage: number = 0;
+
+  protected destroySubscriptions = new Subject<void>();
+
+  protected pageSize: number = environment.AMOUNT_RECORDS_PER_PAGE;
+
   constructor(
     protected layoutService: LayoutService,
-    protected utilsService: UtilsService
+    protected utilsService: UtilsService,
+    protected applicationGetByPage: any = null,
+    protected applicationGetAll: any = null,
+    protected applicationCreate: any = null,
+    protected applicationUpdate: any = null,
+    protected applicationDelete: any = null
   ) {
     this.layoutService.configuration = { menu: true, toolbar: true };
   }
 
   pageChanged(pageNumber: number) {
-    this.data = this.dataOriginal.slice(pageNumber * 20, pageNumber * 20 + 20);
+    if (!this.applicationGetByPage) return;
+
+    this.currentPage = pageNumber;
+
+    this.applicationGetByPage
+      .execute(pageNumber)
+      .pipe(takeUntil(this.destroySubscriptions))
+      .subscribe({
+        next: (response: any) => {
+          console.log('response', response);
+          this.data = response.results;
+          this.amountRecords = response.total;
+        },
+        error: console.error,
+      });
   }
 
   showOptionsExport() {
-    this.utilsService.showOptions<Entity>({
-      classComponent: ExportComponent,
-      data: this.dataOriginal,
-      metaData: this.metaData,
-      filename: 'Conductores',
-      sheetName: 'Lista de conductores',
-    });
+    if (!this.applicationGetAll) return;
+
+    this.applicationGetAll
+      .execute()
+      .pipe(takeUntil(this.destroySubscriptions))
+      .subscribe({
+        next: (response: any) => {
+          this.utilsService.showOptions<Entity>({
+            classComponent: ExportComponent,
+            data: response,
+            metaData: this.metaData,
+            filename: this.filename,
+            sheetName: this.sheetName,
+          });
+        },
+      });
   }
 
   openForm(record?: Entity) {
-    this.utilsService.showModal<Entity>({
+    const reference: MatDialogRef<any> = this.utilsService.showModal<Entity>({
       classComponent: this.modalNewUpdate.component,
       panelClass: this.modalNewUpdate.panelClass,
       data: record,
     });
+
+    reference.afterClosed().subscribe({
+      next: (response: any) => {
+        if (!response) return;
+        if (!this.applicationCreate || !this.applicationUpdate) return;
+
+        this.applicationUpdate
+          .execute(response.id, this.fromDomainToData(response.values))
+          .pipe(takeUntil(this.destroySubscriptions))
+          .subscribe({
+            next: (response: any) => {
+              this.pageChanged(this.currentPage);
+            },
+          });
+        if (response.id) {
+        } else {
+          this.applicationCreate
+            .execute(this.fromDomainToData(response.values))
+            .pipe(takeUntil(this.destroySubscriptions))
+            .subscribe({
+              next: (response: any) => {
+                this.pageChanged(this.currentPage);
+              },
+            });
+        }
+      },
+    });
   }
+
+  delete(id: number) {
+    if (!this.applicationDelete) return;
+
+    this.utilsService
+      .showConfirm()
+      .pipe(takeUntil(this.destroySubscriptions))
+      .subscribe({
+        next: (response: any) => {
+          if (!response) return;
+
+          this.applicationDelete
+            .execute(id)
+            .pipe(takeUntil(this.destroySubscriptions))
+            .subscribe({
+              next: (response: any) => {
+                this.pageChanged(this.currentPage);
+              },
+            });
+        },
+      });
+  }
+
+  abstract fromDomainToData(data: any): any;
 }

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
 import * as XLSX from 'xlsx';
 
+import { ConfirmComponent } from '../components/confirm/confirm.component';
 import { Metadata } from '../interfaces/metadata.interface';
 
 declare var require: any;
@@ -63,12 +65,23 @@ export class UtilsService {
     classComponent: any;
     panelClass: string;
     data?: Entity;
-  }) {
-    this.dialog.open(params.classComponent, {
+  }): MatDialogRef<any> {
+    return this.dialog.open(params.classComponent, {
       panelClass: params.panelClass,
       disableClose: true,
       data: params.data,
     });
+  }
+
+  showConfirm(message: string = ''): Observable<any> {
+    const reference = this.dialog.open(ConfirmComponent, {
+      width: '320px',
+      disableClose: true,
+    });
+
+    if (message) reference.componentInstance.messageToConfirm = message;
+
+    return reference.afterClosed();
   }
 
   private async fromFileToDataUrl(path: string) {

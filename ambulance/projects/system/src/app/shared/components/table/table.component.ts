@@ -21,20 +21,13 @@ export class TableComponent {
 
   columns?: string[];
 
-  constructor() {
-    //console.log('view children', this.columnsDef);
-  }
-
   ngOnChanges() {
     this.columns = this.metaData.map((x: any) => x.field);
+    this.ngAfterContentInit();
   }
 
-  /*ngAfterViewInit() {
-    console.log('view children2', this.columnsDef);
-  }*/
-
   ngAfterContentInit() {
-    if (!this.columnsDef) return;
+    if (!this.columnsDef || this.data.length == 0) return;
 
     this.columnsDef.forEach((columnDef: MatColumnDef) => {
       this.columns?.push(columnDef.name);
