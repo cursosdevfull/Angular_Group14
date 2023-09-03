@@ -6,13 +6,11 @@ phases:
   pre_build:
     commands:
       - echo "Installing dependencies"
-      - cd ambulance
       - npm install --force
   build:
     commands:
       - echo "Starting compilation"
-      - cd ambulance
-      - npm run build:prod --configuration production --project=system
+      - npm run build:prod
   post_build:
     commands:
       - aws s3 rm s3://cursoangular14 --recursive
@@ -23,4 +21,4 @@ artifacts:
   name: "AngularCurso14"
   files:
     - "**/*"
-  base-directory: ambulance/dist/system
+  base-directory: dist/system
