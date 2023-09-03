@@ -1,4 +1,11 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  forwardRef,
+  Input,
+  ViewChild,
+} from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { WebcamImage } from 'ngx-webcam';
 import { Subject } from 'rxjs';
 
@@ -6,16 +13,43 @@ import { Subject } from 'rxjs';
   selector: 'amb-photo',
   templateUrl: './photo.component.html',
   styleUrls: ['./photo.component.css'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => PhotoComponent),
+      multi: true,
+    },
+  ],
 })
 export class PhotoComponent {
   @ViewChild('photo') photo: ElementRef;
   @ViewChild('file') file: ElementRef;
+  @Input() photoByDefault: string;
   showHover: boolean = false;
   isUsingWebcam: boolean = false;
   triggerSnapshot = new Subject<void>();
 
+  value: File;
+  onChange: any = () => {};
+  onTouched: any = () => {};
+
+  registerOnChange(fn: any) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any) {
+    this.onTouched = fn;
+  }
+
+  writeValue(value: File) {
+    if (value) this.value = value;
+  }
+
   onFileDropped(file: File) {
     if (!file.type.startsWith('image/') || file.size > 2000000) return;
+
+    this.onChange(file);
+    this.onTouched();
 
     const reader = new FileReader();
     reader.onloadend = (response: any) => {
@@ -59,5 +93,9 @@ export class PhotoComponent {
 
   takePic() {
     this.triggerSnapshot.next();
+  }
+
+  ngAfterViewInit() {
+    if (this.photoByDefault) this.loadPhotoFromUrlOrBase64(this.photoByDefault);
   }
 }

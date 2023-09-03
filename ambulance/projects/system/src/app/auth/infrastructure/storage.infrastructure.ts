@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import jwtDecode from 'jwt-decode';
 
 import { StorageRepository } from '../domain/repositories/storage.repository';
 
@@ -12,5 +13,13 @@ export class StorageInfrastructure implements StorageRepository {
   }
   clean(): void {
     sessionStorage.clear();
+  }
+
+  recoveryFieldInToken(field: string): string | string[] {
+    const accessToken = this.recovery('accessToken');
+    if (!accessToken) return null;
+
+    const payload = jwtDecode(accessToken);
+    return payload[field];
   }
 }

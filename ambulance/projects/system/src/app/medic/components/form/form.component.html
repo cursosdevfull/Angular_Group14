@@ -7,7 +7,10 @@
 <form mat-dialog-content fxLayout="column" [formGroup]="fg">
   <div fxLayout fxLayoutGap="20px">
     <div fxLayout="column" fxFlex="1 1 33%">
-      <amb-photo></amb-photo>
+      <amb-photo
+        formControlName="photo"
+        [photoByDefault]="photoToShow"
+      ></amb-photo>
     </div>
     <div fxLayout="column" fxFlex="1 1 33%">
       <mat-form-field appearance="outline">
@@ -17,7 +20,7 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Segundo nombre</mat-label>
-        <input type="text" matInput required formControlName="secondname" />
+        <input type="text" matInput required formControlName="secondName" />
         <mat-error>Second name is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">

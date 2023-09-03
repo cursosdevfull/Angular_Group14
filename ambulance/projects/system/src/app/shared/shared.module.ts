@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -23,6 +24,7 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
 import { PhotoComponent } from './components/photo/photo.component';
 import { TableComponent } from './components/table/table.component';
 import { TitleComponent } from './components/title/title.component';
+import { RolesAllowedDirective } from './directives/roles-allowed.directive';
 import { UploadDirective } from './directives/upload.directive';
 import { UtilsService } from './services/utils.service';
 
@@ -36,6 +38,7 @@ import { UtilsService } from './services/utils.service';
     ConfirmComponent,
     PhotoComponent,
     UploadDirective,
+    RolesAllowedDirective,
   ],
   imports: [
     CommonModule,
@@ -50,6 +53,7 @@ import { UtilsService } from './services/utils.service';
     MatListModule,
     WebcamModule,
     MatSlideToggleModule,
+    MatSnackBarModule,
   ],
   exports: [
     TitleComponent,
@@ -67,6 +71,7 @@ import { UtilsService } from './services/utils.service';
     MatFormFieldModule,
     MatInputModule,
     PhotoComponent,
+    RolesAllowedDirective,
   ],
   providers: [UtilsService],
 })

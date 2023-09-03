@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import * as XLSX from 'xlsx';
 
@@ -18,7 +19,8 @@ export type OPTIONS_EXPORT_PDF = 'SHOW' | 'LIST' | 'DOWNLOAD';
 export class UtilsService {
   constructor(
     private readonly options: MatBottomSheet,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private readonly notify: MatSnackBar
   ) {}
 
   private fromDataToExport<Entity>(data: Entity[], metaData: Metadata[]) {
@@ -82,6 +84,10 @@ export class UtilsService {
     if (message) reference.componentInstance.messageToConfirm = message;
 
     return reference.afterClosed();
+  }
+
+  showNotify(message: string, duration: number = 3000) {
+    this.notify.open(message, null, { duration });
   }
 
   private async fromFileToDataUrl(path: string) {

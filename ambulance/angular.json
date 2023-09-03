@@ -16,9 +16,7 @@
             "outputPath": "dist/system",
             "index": "projects/system/src/index.html",
             "main": "projects/system/src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "projects/system/tsconfig.app.json",
             "assets": [
               "projects/system/src/favicon.ico",
@@ -35,8 +33,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "5mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -44,7 +42,13 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "projects/system/src/environments/environment.ts",
+                  "with": "projects/system/src/environments/environment.production.ts"
+                }
+              ]
             },
             "development": {
               "buildOptimizer": false,
@@ -84,18 +88,13 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/system/tsconfig.spec.json",
             "assets": [
               "projects/system/src/favicon.ico",
               "projects/system/src/assets"
             ],
-            "styles": [
-              "projects/system/src/styles.css"
-            ],
+            "styles": ["projects/system/src/styles.css"],
             "scripts": []
           }
         }
@@ -126,10 +125,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/libs/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
       }

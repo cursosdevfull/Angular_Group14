@@ -2,7 +2,7 @@
   <button mat-button class="profile" [matMenuTriggerFor]="menu">
     <div fxLayout fxLayoutAlign="start center">
       <img src="/assets/images/user.png" alt="" />
-      <span>Nombre de usuario</span>
+      <span>{{ username | uppercase }}</span>
       <mat-icon matSuffix>expand_more</mat-icon>
     </div>
   </button>

@@ -1,5 +1,10 @@
 <amb-title [title]="title" [icon]="icon">
-  <button mat-raised-button color="primary" (click)="openForm()">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="openForm()"
+    *rolesAllowed="['OPERATOR']"
+  >
     <mat-icon>add</mat-icon>
     <span>ADD MEDIC</span>
   </button>
@@ -23,6 +28,7 @@
             color="accent"
             matTooltip="DELETE"
             (click)="delete(row.id)"
+            *rolesAllowed="['OPERATOR', 'AUDITOR', 'ADMIN']"
           >
             <mat-icon>delete</mat-icon>
           </button>

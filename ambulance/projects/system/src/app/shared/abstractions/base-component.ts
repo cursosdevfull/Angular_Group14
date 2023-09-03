@@ -91,21 +91,23 @@ export abstract class BaseComponent<Entity> {
         if (!response) return;
         if (!this.applicationCreate || !this.applicationUpdate) return;
 
-        this.applicationUpdate
-          .execute(response.id, this.fromDomainToData(response.values))
-          .pipe(takeUntil(this.destroySubscriptions))
-          .subscribe({
-            next: (response: any) => {
-              this.pageChanged(this.currentPage);
-            },
-          });
         if (response.id) {
+          this.applicationUpdate
+            .execute(response.id, this.fromDomainToData(response.values))
+            .pipe(takeUntil(this.destroySubscriptions))
+            .subscribe({
+              next: (response: any) => {
+                this.utilsService.showNotify('Record updated successfully');
+                this.pageChanged(this.currentPage);
+              },
+            });
         } else {
           this.applicationCreate
             .execute(this.fromDomainToData(response.values))
             .pipe(takeUntil(this.destroySubscriptions))
             .subscribe({
               next: (response: any) => {
+                this.utilsService.showNotify('Record created successfully');
                 this.pageChanged(this.currentPage);
               },
             });
@@ -129,6 +131,7 @@ export abstract class BaseComponent<Entity> {
             .pipe(takeUntil(this.destroySubscriptions))
             .subscribe({
               next: (response: any) => {
+                this.utilsService.showNotify('Record deleted successfully');
                 this.pageChanged(this.currentPage);
               },
             });

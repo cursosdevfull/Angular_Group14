@@ -1,0 +1,25 @@
+version: "0.2"
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+  pre_build:
+    commands:
+      - echo "Installing dependencies"
+      - npm install
+  build:
+    commands:
+      - echo "Starting compilation"
+      - cd ambulance
+      - npm run build:prod --configuration production --project=system
+  post_build:
+    commands:
+      - aws s3 rm s3://cursoangular14 --recursive
+      - aws s3 sync ./ambulance/dist/system s3://cursoangular14 --delete
+      - aws cloudfront create-invalidation --distribution-id E3ODQVVGM08NN0 --paths '/*'
+
+artifacts:
+  name: "AngularCurso14"
+  files:
+    - "**/*"
+  base-directory: ambulance/dist/system

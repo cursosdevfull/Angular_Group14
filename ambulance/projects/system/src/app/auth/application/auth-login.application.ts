@@ -31,4 +31,8 @@ export class AuthLoginApplication {
 
     this.router.navigate(['/dashboard']);
   }
+
+  get isUserLogged(): boolean {
+    return this.storageRepository.recovery('accessToken') ? true : false;
+  }
 }

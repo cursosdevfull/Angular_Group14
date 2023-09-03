@@ -99,14 +99,23 @@ export class ListComponent extends BaseComponent<IMedic> {
     this.destroySubscriptions.unsubscribe();
   }
 
-  fromDomainToData(data: any): any {
-    return {
-      nombre: data.name,
-      segundo_nombre: data.secondname,
-      apellido: data.lastname,
-      dni: data.dni,
-      cmp: data.cmp,
-      correo: data.email,
+  fromDomainToData(data: FormData): FormData {
+    const metadata = {
+      id: 'id',
+      name: 'nombre',
+      secondName: 'segundo_nombre',
+      lastname: 'apellido',
+      dni: 'dni',
+      cmp: 'cmp',
+      email: 'correo',
+      photo: 'foto',
     };
+
+    const newFormData = new FormData();
+    data.forEach((value, key) => {
+      newFormData.append(metadata[key], value);
+    });
+
+    return newFormData;
   }
 }

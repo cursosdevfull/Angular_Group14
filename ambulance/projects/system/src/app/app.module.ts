@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { AuthLoginApplication } from './auth/application/auth-login.application';
 import { AuthLogoutApplication } from './auth/application/auth-logout.application';
 import { StorageCleanApplication } from './auth/application/storage-clean.application';
+import { StorageRecoveryTokenApplication } from './auth/application/storage-recover-token';
 import { StorageRecoveryApplication } from './auth/application/storage-recovery.application';
 import { StorageSaveApplication } from './auth/application/storage-save.application';
 import { AuthInfrastructure } from './auth/infrastructure/auth.infrastructure';
@@ -27,6 +28,7 @@ const applicationProviders = [
   StorageSaveApplication,
   StorageCleanApplication,
   StorageRecoveryApplication,
+  StorageRecoveryTokenApplication,
 ];
 const infrastructureProviders = [AuthInfrastructure, StorageInfrastructure];
 
