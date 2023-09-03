@@ -14,7 +14,7 @@ phases:
   post_build:
     commands:
       - aws s3 rm s3://cursoangular14 --recursive
-      - aws s3 sync ./ambulance/dist/system s3://cursoangular14 --delete
+      - aws s3 sync dist/system s3://cursoangular14 --delete
       - aws cloudfront create-invalidation --distribution-id E3ODQVVGM08NN0 --paths '/*'
 
 artifacts:
