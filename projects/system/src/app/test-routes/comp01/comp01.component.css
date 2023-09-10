@@ -1,0 +1,19 @@
+.menu {
+  border: 1px solid red;
+  padding: 10px;
+  width: 200px;
+  font-family: Verdana;
+  margin-right: 20px;
+}
+
+.container-test {
+  display: flex;
+}
+
+.container-route {
+  border: 1px solid blue;
+  padding: 10px;
+  width: 600px;
+  height: 400px;
+  font-family: Verdana;
+}

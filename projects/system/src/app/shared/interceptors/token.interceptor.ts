@@ -24,8 +24,13 @@ export class TokenInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const accessToken = this.infrastructureStorage.recovery('accessToken');
+    const headers = req.headers
+      .append('Authorization', `Bearer ${accessToken}`)
+      .append('Access-Control-Allow-Origin', 'http://localhost:4200')
+      .append('Access-Control-Allow-Credentials', 'true');
+
     const requestCloned = req.clone({
-      headers: req.headers.append('Authorization', `Bearer ${accessToken}`),
+      headers: headers, //req.headers.append('Authorization', `Bearer ${accessToken}`),
     });
 
     return next.handle(requestCloned).pipe(

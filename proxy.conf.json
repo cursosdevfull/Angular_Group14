@@ -1,0 +1,8 @@
+{
+  "/socket.io": {
+    "target": "http://localhost:4000",
+    "secure": false,
+    "changeSecure": false,
+    "logLevel": "debug"
+  }
+}

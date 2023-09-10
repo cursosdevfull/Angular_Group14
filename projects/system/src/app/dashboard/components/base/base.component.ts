@@ -8,6 +8,8 @@ import { LayoutService } from '../../../config/modules/layout/layout.service';
   styleUrls: ['./base.component.css'],
 })
 export class BaseComponent {
+  title = 'DASHBOARD';
+  icon = 'dashboard';
   constructor(private readonly layoutService: LayoutService) {
     this.layoutService.configuration = { menu: true, toolbar: true };
   }

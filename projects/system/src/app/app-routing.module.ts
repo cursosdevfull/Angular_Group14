@@ -5,6 +5,8 @@ import { LoginComponent } from './core/components/login/login.component';
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
 import { RecoveryComponent } from './core/components/recovery/recovery.component';
 import { RegisterComponent } from './core/components/register/register.component';
+import { AuthenticationGuardFn } from './guards/authentication.guard';
+import { AuthorizationGuardFn } from './guards/authorization.guard';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -17,6 +19,11 @@ const routes: Routes = [
   },
   {
     path: 'driver',
+    canActivate: [
+      /*AuthenticationGuard*/ AuthenticationGuardFn,
+      AuthorizationGuardFn,
+    ],
+    data: { rolesAllowed: ['NURSE', 'AUDITOR'] },
     loadChildren: () =>
       import('./driver/driver.module').then((m) => m.DriverModule),
   },
@@ -33,6 +40,13 @@ const routes: Routes = [
   {
     path: 'user',
     loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
+  },
+  {
+    path: 'test-routes',
+    loadChildren: () =>
+      import('./test-routes/test-routes.module').then(
+        (m) => m.TestRoutesModule
+      ),
   },
   { path: '**', component: NotFoundComponent },
 ];

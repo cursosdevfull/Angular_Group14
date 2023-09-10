@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TableDevModule } from 'cursosdev-libs';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 
 import { SharedModule } from '../shared/shared.module';
@@ -32,6 +33,7 @@ const infrastructureProviders = [MedicInfrastructure];
     NgScrollbarModule,
     FlexLayoutModule,
     ReactiveFormsModule,
+    TableDevModule,
   ],
   providers: [...applicationProviders, ...infrastructureProviders],
 })

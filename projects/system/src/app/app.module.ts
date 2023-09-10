@@ -18,6 +18,7 @@ import { StorageInfrastructure } from './auth/infrastructure/storage.infrastruct
 import { LAYOUT_CONSTANTS } from './config/modules/layout/layout.constant';
 import { LayoutModule } from './config/modules/layout/layout.module';
 import { CoreModule } from './core/core.module';
+import { AuthenticationGuard } from './guards/authentication.guard';
 import { Paginator } from './shared/clases/paginator';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { IconService } from './shared/services/icon.service';
@@ -33,6 +34,8 @@ const applicationProviders = [
 const infrastructureProviders = [AuthInfrastructure, StorageInfrastructure];
 
 const interceptors = [TokenInterceptor];
+
+const guards = [AuthenticationGuard];
 
 @NgModule({
   declarations: [AppComponent],
@@ -50,6 +53,7 @@ const interceptors = [TokenInterceptor];
     ...applicationProviders,
     ...infrastructureProviders,
     ...interceptors,
+    ...guards,
     {
       provide: MatPaginatorIntl,
       useClass: Paginator,
