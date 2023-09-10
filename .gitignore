@@ -1,1 +1,6 @@
 ambulance
+.angular
+dist
+projects
+server-api
+server-socket
